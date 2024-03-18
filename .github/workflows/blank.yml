@@ -18,6 +18,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/sshnew
         ssh-keyscan -H 51.38.125.55 > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git checkout main && git pull && exit"
+      run: ssh -vvv ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git checkout main && git pull && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
