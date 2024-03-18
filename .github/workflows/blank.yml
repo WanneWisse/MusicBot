@@ -3,21 +3,23 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
 jobs:
-  run_pull:
-    name: run pull
+  deploy:
     runs-on: ubuntu-latest
-    
+  
     steps:
-    - name: install ssh keys
-      # check this thread to understand why its needed:
-      # https://stackoverflow.com/a/70447517
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/sshnew
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/sshnew
-        ssh-keyscan -H 51.38.125.55 > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh -vvv ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git checkout main && git pull && exit"
-    - name: cleanup
-      run: rm -rf ~/.ssh
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Print SSH private key
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}"
+  
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  
+      - name: Deploy code
+        run: |
+          ssh ubuntu@51.38.125.55
+
