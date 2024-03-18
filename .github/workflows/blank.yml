@@ -20,4 +20,4 @@ jobs:
 
       - name: Deploy code
         run: |
-          ssh username@hostname "cd /path/to/your/project && git pull origin main && ./deploy.sh"
+          ssh ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git pull origin main"
