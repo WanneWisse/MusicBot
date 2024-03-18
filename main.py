@@ -20,5 +20,6 @@ async def on_ready():
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-bot.run(config.get('Bot', 'token'))
+token = config.get('Bot', 'token')
+bot.run(token)
 
