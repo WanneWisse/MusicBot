@@ -10,7 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/sshnew
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/sshnew
+        ssh-keyscan -H 51.38.125.55 > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ubuntu@51.38.125.55 "cd  && /home/ubuntu/musicBot/MusicBot && git checkout main && git pull && exit"
+      run: ssh ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot  && git checkout main && git pull && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
