@@ -21,5 +21,5 @@ jobs:
   
       - name: Deploy code
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git pull origin main && ./deploy.sh"
+          ssh -o StrictHostKeyChecking=no ubuntu@51.38.125.55 "cd /home/ubuntu/musicBot/MusicBot && git pull origin main --force && ./deploy.sh"
 
